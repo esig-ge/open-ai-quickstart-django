@@ -15,4 +15,3 @@ class PetnamesViewTest(TestCase):
         #  {'choices': [OpenAIObject.construct_from({'text': 'Truc muche, Machin truc'})] })
         self.client.post('/', {'animal': 'cat'})
         mock_create.assert_called_with(model='text-davinci-002', prompt=_generate_prompt('cat'), temperature=0.6)
-
