@@ -10,20 +10,24 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import environ  # noqa : for some reason PyCharm doesn't detect the depency django-environ
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Setting up django-environ tools
+env = environ.Env()
+environ.Env.read_env()  # reading .env file
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)t*rpxx@yk6(l#f&&24657xh=z47klz6b96n50(h5@=+izgx8='
+SECRET_KEY = env.str('SECRET_KEY')
 
-# Secret key for OpenAI
-os.environ['OPENAI_API_KEY'] = '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'
+# Export secret key for OpenAI as environment variable
+os.environ['OPENAI_API_KEY'] = env.str('OPENAI_API_KEY')
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -60,8 +64,7 @@ ROOT_URLCONF = 'OpenAIQuickstartDjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,12 +112,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
+LANGUAGE_CODE = 'fr-ch'
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Zurich'
 
 USE_I18N = True
+
+USE_L10N = True
 
 USE_TZ = True
 
