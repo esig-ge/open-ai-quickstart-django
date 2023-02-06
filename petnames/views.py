@@ -8,7 +8,7 @@ def index(request, result=''):
         animal = request.POST["animal"]
         response = openai.Completion.create(
             model="text-davinci-002",
-            prompt=_generate_prompt(animal),
+            prompt="three names for a " + animal,
             temperature=0.6,
         )
         return redirect(reverse("index", kwargs={"result": response.choices[0].text}))
